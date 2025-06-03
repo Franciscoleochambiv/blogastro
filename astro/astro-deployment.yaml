@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-astro-deployment
+  labels:
+    app: frontend-astro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-astro
+  template:
+    metadata:
+      labels:
+        app: frontend-astro
+    spec:
+      containers:
+        - name: frontend-astro
+          image: pancho445411/frontend-astro:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-astro-service
+spec:
+  selector:
+    app: frontend-astro
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
